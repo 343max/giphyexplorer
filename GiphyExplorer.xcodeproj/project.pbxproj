@@ -14,6 +14,8 @@
 		BB9070762110E02400E0AA08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB9070752110E02400E0AA08 /* Assets.xcassets */; };
 		BB9070792110E02400E0AA08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB9070772110E02400E0AA08 /* LaunchScreen.storyboard */; };
 		BB9070842110E02400E0AA08 /* GiphyExplorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9070832110E02400E0AA08 /* GiphyExplorerTests.swift */; };
+		BB9070912110E10600E0AA08 /* MediaRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9070902110E10600E0AA08 /* MediaRepresentation.swift */; };
+		BB9070962110E17A00E0AA08 /* MediaRepresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9070952110E17A00E0AA08 /* MediaRepresentationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		BB90707F2110E02400E0AA08 /* GiphyExplorerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GiphyExplorerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9070832110E02400E0AA08 /* GiphyExplorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyExplorerTests.swift; sourceTree = "<group>"; };
 		BB9070852110E02400E0AA08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB9070902110E10600E0AA08 /* MediaRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRepresentation.swift; sourceTree = "<group>"; };
+		BB9070952110E17A00E0AA08 /* MediaRepresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRepresentationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 		BB90706B2110E02100E0AA08 /* GiphyExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				BB90708E2110E0A900E0AA08 /* Model */,
 				BB90706C2110E02100E0AA08 /* AppDelegate.swift */,
 				BB90706E2110E02100E0AA08 /* MasterViewController.swift */,
 				BB9070702110E02100E0AA08 /* DetailViewController.swift */,
@@ -93,10 +98,35 @@
 		BB9070822110E02400E0AA08 /* GiphyExplorerTests */ = {
 			isa = PBXGroup;
 			children = (
+				BB9070942110E15100E0AA08 /* Model */,
+				BB90708F2110E0C300E0AA08 /* json */,
 				BB9070832110E02400E0AA08 /* GiphyExplorerTests.swift */,
 				BB9070852110E02400E0AA08 /* Info.plist */,
 			);
 			path = GiphyExplorerTests;
+			sourceTree = "<group>";
+		};
+		BB90708E2110E0A900E0AA08 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB9070902110E10600E0AA08 /* MediaRepresentation.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BB90708F2110E0C300E0AA08 /* json */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		BB9070942110E15100E0AA08 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB9070952110E17A00E0AA08 /* MediaRepresentationTests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,7 +240,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9070962110E17A00E0AA08 /* MediaRepresentationTests.swift in Sources */,
 				BB9070842110E02400E0AA08 /* GiphyExplorerTests.swift in Sources */,
+				BB9070912110E10600E0AA08 /* MediaRepresentation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
