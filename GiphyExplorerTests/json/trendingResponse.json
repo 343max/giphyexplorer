@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+            "type": "gif",
+            "id": "3o6vXPqTWMZiGc2GVq",
+            "slug": "wwe-wrestling-3o6vXPqTWMZiGc2GVq",
+            "url": "https:\/\/giphy.com\/gifs\/wwe-wrestling-3o6vXPqTWMZiGc2GVq",
+            "bitly_gif_url": "https:\/\/gph.is\/2uTIaTE",
+            "bitly_url": "https:\/\/gph.is\/2uTIaTE",
+            "embed_url": "https:\/\/giphy.com\/embed\/3o6vXPqTWMZiGc2GVq",
+            "username": "wwe",
+            "source": "https:\/\/wwe.com",
+            "rating": "pg",
+            "content_url": "",
+            "source_tld": "wwe.com",
+            "source_post_url": "https:\/\/wwe.com",
+            "is_sticker": 0,
+            "import_datetime": "2017-08-17 12:26:49",
+            "trending_datetime": "2018-07-31 15:23:21",
+            "user": {
+                "avatar_url": "https:\/\/media2.giphy.com\/avatars\/wwe\/kFThSppSrHym.jpg",
+                "avatar": "https:\/\/media2.giphy.com\/avatars\/wwe\/kFThSppSrHym.jpg",
+                "banner_url": "",
+                "profile_url": "https:\/\/giphy.com\/wwe\/",
+                "username": "wwe",
+                "display_name": "WWE"
+            },
+            "images": {
+            },
+            "title": "",
+            "_score": 0
+        }
+    ],
+    "pagination": {
+        "total_count": 100355,
+        "count": 1,
+        "offset": 0
+    },
+    "meta": {
+        "status": 200,
+        "msg": "OK",
+        "response_id": "5b60d0a07936336277ca0ccf"
+    }
+}
