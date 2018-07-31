@@ -1,6 +1,7 @@
 // Copyright Max von Webel. All Rights Reserved.
 
 import XCTest
+@testable import GiphyExplorer
 
 class MediaRepresentationTests: XCTestCase {
 
@@ -17,7 +18,7 @@ class MediaRepresentationTests: XCTestCase {
     "webp_size": "96022"
 }
 """.data(using: .utf8)!
-        let mediaRepresentation = try! JSONDecoder().decode(Image.self, from: data)
+        let mediaRepresentation = try! JSONDecoder().decode(MediaRepresentation.self, from: data)
         XCTAssertEqual(mediaRepresentation.dimensions.width, 100)
         XCTAssertEqual(mediaRepresentation.dimensions.height, 57)
         XCTAssertEqual(mediaRepresentation.mp4!.url, URL(string: "https://media0.giphy.com/media/jxcilyPDPuublRty5I/100w.mp4"))
@@ -33,7 +34,7 @@ class MediaRepresentationTests: XCTestCase {
     "size": "49824"
 }
 """.data(using: .utf8)!
-        let mediaRepresentation = try! JSONDecoder().decode(Image.self, from: data)
+        let mediaRepresentation = try! JSONDecoder().decode(MediaRepresentation.self, from: data)
         XCTAssertNil(mediaRepresentation.mp4)
     }
 }
