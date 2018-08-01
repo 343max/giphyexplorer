@@ -4,6 +4,7 @@ import UIKit
 import AVKit
 
 class ImageCell: UICollectionViewCell {
+    weak var player: AVPlayer?
     weak var playerLayer: AVPlayerLayer?
     var image: Image? {
         didSet {
@@ -22,11 +23,11 @@ class ImageCell: UICollectionViewCell {
             playerLayer.frame = contentView.bounds
             contentView.layer.addSublayer(playerLayer)
             self.playerLayer = playerLayer
+            self.player = player
             notificationCenter.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: OperationQueue.main) { _ in
                 player.seek(to: CMTime.zero)
                 player.play()
             }
-            player.play()
         }
     }
     
@@ -43,11 +44,23 @@ class ImageCell: UICollectionViewCell {
 class MasterViewController: UICollectionViewController {
     var detailViewController: DetailViewController? = nil
     var client: GiphyClient!
+    var loading = false {
+        didSet {
+            DispatchQueue.main.async {
+                if let refreshControl = self.refreshControl {
+                    if self.loading {
+                        refreshControl.beginRefreshing()
+                    } else {
+                        refreshControl.endRefreshing()
+                    }
+                }
+            }
+        }
+    }
     var images: [Image] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.layout.images = self.images.map { $0.images[MediaRepresentation.mp4previewKey]! }
-                self.refreshControl.endRefreshing()
                 self.collectionView?.reloadData()
             }
         }
@@ -87,9 +100,10 @@ class MasterViewController: UICollectionViewController {
     }
     
     func loadMore(reload: Bool) {
+        assert(!loading)
+        loading = true
+
         let offset = reload ? 0 : images.count
-        
-        refreshControl.beginRefreshing()
         client.trending(offset: offset).then { [weak self] (response) in
             guard let self = self else {
                 return
@@ -103,10 +117,12 @@ class MasterViewController: UICollectionViewController {
             }
             
             if response.page.offset < self.images.count {
-                self.images = response.payload
+                self.images = images
             } else {
-                self.images += response.payload
+                self.images += images
             }
+            
+            self.loading = false
         }
     }
 
@@ -138,6 +154,20 @@ class MasterViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
         cell.image = images[indexPath.item]
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        (cell as? ImageCell)?.player?.play()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        (cell as? ImageCell)?.player?.pause()
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !loading && scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.height * 1.5 {
+            loadMore(reload: false)
+        }
     }
 }
 
