@@ -17,8 +17,21 @@ class PromiseTests: XCTestCase {
             XCTAssertEqual(result, "hello")
         }
 
-        XCTAssertTrue(promise.fullfilled)
+        XCTAssertTrue(promise.fulfilled)
         XCTAssertTrue(setupCalled)
+        XCTAssertTrue(thenCalled)
+    }
+    
+    func testFulfillCall() {
+        var thenCalled = false
+        let promise = Promise<String> { (_, promise) in
+            promise.fulfill("hello")
+            }.then { (result) in
+                thenCalled = true
+                XCTAssertEqual("hello", result)
+        }
+
+        XCTAssertTrue(promise.fulfilled)
         XCTAssertTrue(thenCalled)
     }
 
@@ -34,7 +47,7 @@ class PromiseTests: XCTestCase {
             expectation.fulfill()
         }
 
-        XCTAssertFalse(promise.fullfilled)
+        XCTAssertFalse(promise.fulfilled)
 
         wait(for: [expectation], timeout: 0.1)
     }

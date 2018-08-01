@@ -3,32 +3,81 @@
 import UIKit
 import AVKit
 
-class ImageCell: UICollectionViewCell {
-    weak var player: AVPlayer?
-    weak var playerLayer: AVPlayerLayer?
-    var image: Image? {
-        didSet {
-            let notificationCenter = NotificationCenter.default
-            
-            notificationCenter.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-            self.playerLayer?.removeFromSuperlayer()
-            
-            guard let image = image else {
-                return
+extension Image {
+    var thumbnail: MediaRepresentation? {
+        get {
+            guard let thumbnail = self.mp4s[MediaRepresentation.mp4previewKey] else {
+                return nil
             }
             
-            let player = AVPlayer(url: image.mp4s["preview"]!.mp4!.url)
-            player.automaticallyWaitsToMinimizeStalling = true
-            let playerLayer = AVPlayerLayer(player: player)
-            playerLayer.frame = contentView.bounds
-            contentView.layer.addSublayer(playerLayer)
-            self.playerLayer = playerLayer
-            self.player = player
-            notificationCenter.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: OperationQueue.main) { _ in
-                player.seek(to: CMTime.zero)
-                player.play()
+            if thumbnail.mp4 == nil {
+                return nil
+            }
+            
+            return thumbnail
+        }
+    }
+    var thumbnailURL: URL? {
+        get {
+            return thumbnail?.mp4?.url
+        }
+    }
+}
+
+class ImageCell: UICollectionViewCell {
+    var promise: DownloadController.AssetPromise? {
+        didSet {
+            if let promise = promise {
+                promise.then {
+                    self.startPlaying()
+                }
+            } else {
+                self.cleanUpPlayer()
             }
         }
+    }
+    
+    var isBeingDisplayed = false {
+        didSet {
+            if isBeingDisplayed {
+                self.startPlaying()
+            } else {
+                player?.pause()
+            }
+        }
+    }
+    
+    weak var player: AVPlayer?
+    weak var playerLayer: AVPlayerLayer?
+    
+    func startPlaying() {
+        guard let localURL = promise?.result?.localURL else {
+            return
+        }
+        
+        if (!isBeingDisplayed) {
+            return
+        }
+        
+        cleanUpPlayer()
+        
+        let player = AVPlayer(url: localURL)
+        player.automaticallyWaitsToMinimizeStalling = true
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = contentView.bounds
+        contentView.layer.addSublayer(playerLayer)
+        self.playerLayer = playerLayer
+        self.player = player
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: OperationQueue.main) { _ in
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+
+    }
+    
+    func cleanUpPlayer() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        self.playerLayer?.removeFromSuperlayer()
     }
     
     override func layoutSubviews() {
@@ -37,11 +86,12 @@ class ImageCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        self.image = nil
+        promise = nil
     }
 }
 
 class MasterViewController: UICollectionViewController {
+    let downloadController = DownloadController()
     var detailViewController: DetailViewController? = nil
     var client: GiphyClient!
     var loading = false {
@@ -59,7 +109,7 @@ class MasterViewController: UICollectionViewController {
     }
     var images: [Image] = [] {
         didSet {
-            self.layout.images = self.images.map { $0.images[MediaRepresentation.mp4previewKey]! }
+            self.layout.images = self.images.map { $0.thumbnail! }
         }
     }
     
@@ -73,6 +123,8 @@ class MasterViewController: UICollectionViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        collectionView.prefetchDataSource = self
         
         let layout = ImageCollectionViewLayout(columnCount: 2)
         collectionView.collectionViewLayout = layout
@@ -107,7 +159,7 @@ class MasterViewController: UICollectionViewController {
             }
             
             let images = response.payload.filter { image in
-                guard let preview = image.mp4s[MediaRepresentation.mp4previewKey] else {
+                guard let preview = image.thumbnail else {
                     return false
                 }
                 return preview.dimensions != nil
@@ -154,16 +206,16 @@ class MasterViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        cell.image = images[indexPath.item]
+        cell.promise = downloadController.download(url: images[indexPath.item].thumbnailURL!)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        (cell as? ImageCell)?.player?.play()
+        (cell as? ImageCell)?.isBeingDisplayed = true
     }
     
     override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        (cell as? ImageCell)?.player?.pause()
+        (cell as? ImageCell)?.isBeingDisplayed = false
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -173,3 +225,12 @@ class MasterViewController: UICollectionViewController {
     }
 }
 
+extension MasterViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if let url = images[indexPath.item].thumbnailURL {
+                let _ = downloadController.download(url: url)
+            }
+        }
+    }
+}

@@ -30,6 +30,8 @@
 		BBFB8A3B2111144D006BB803 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A3A2111144D006BB803 /* APIKey.plist */; };
 		BBFB8A3F21113E83006BB803 /* giantResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A3E21113E83006BB803 /* giantResponse.json */; };
 		BBFB8A4221115BDD006BB803 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */; };
+		BBFB8A44211232E1006BB803 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A43211232E0006BB803 /* DownloadController.swift */; };
+		BBFB8A4621123EE2006BB803 /* DownloadControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A4521123EE1006BB803 /* DownloadControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		BBFB8A3A2111144D006BB803 /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		BBFB8A3E21113E83006BB803 /* giantResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = giantResponse.json; sourceTree = "<group>"; };
 		BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
+		BBFB8A43211232E0006BB803 /* DownloadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
+		BBFB8A4521123EE1006BB803 /* DownloadControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 			children = (
 				BBFB8A2F21110332006BB803 /* NetworkingClient.swift */,
 				BBFB8A3121110372006BB803 /* GiphyClient.swift */,
+				BBFB8A43211232E0006BB803 /* DownloadController.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 		BBFB8A3321110755006BB803 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				BBFB8A4521123EE1006BB803 /* DownloadControllerTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -302,6 +308,7 @@
 				BB9070712110E02100E0AA08 /* DetailViewController.swift in Sources */,
 				BB32DCEA2110F2AE00328A0B /* MediaRepresentation.swift in Sources */,
 				BB96F4DB2111029800ECD809 /* Promise.swift in Sources */,
+				BBFB8A44211232E1006BB803 /* DownloadController.swift in Sources */,
 				BB9070982110F21100E0AA08 /* Image.swift in Sources */,
 				BBFB8A4221115BDD006BB803 /* ImageCollectionViewLayout.swift in Sources */,
 				BBFB8A3521110784006BB803 /* Response.swift in Sources */,
@@ -319,6 +326,7 @@
 			files = (
 				BB9070962110E17A00E0AA08 /* MediaRepresentationTests.swift in Sources */,
 				BB32DCF02110FD2700328A0B /* PaginationTests.swift in Sources */,
+				BBFB8A4621123EE2006BB803 /* DownloadControllerTests.swift in Sources */,
 				BB96F4DD211102A000ECD809 /* PromiseTests.swift in Sources */,
 				BB90709C2110F23200E0AA08 /* ImageTests.swift in Sources */,
 				BBFB8A37211107FD006BB803 /* ResponseTests.swift in Sources */,
@@ -478,6 +486,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GiphyExplorer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -495,6 +504,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GiphyExplorer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

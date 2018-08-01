@@ -12,14 +12,13 @@ protocol UntypedPromise {
 }
 
 class Promise<T> : UntypedPromise {
-    typealias CompletionCall = (_ result: T) -> Void
+    typealias CompletionCallback = (_ result: T) -> Void
     typealias ThenCall = (_ result: T) -> Void
 
     public private(set) var error: Error?
     public private(set) var result: T?
 
-
-    var fullfilled: Bool {
+    var fulfilled: Bool {
         get {
             return result != nil
         }
@@ -34,15 +33,15 @@ class Promise<T> : UntypedPromise {
     var thenCalls: [ThenCall] = []
     var errorCalls: [ErrorCall] = []
 
-    convenience init(_ setup: @escaping (_ complete: @escaping CompletionCall) throws -> Void) {
-        let fullSetup = { (_ complete: @escaping CompletionCall, _ promise: Promise) throws -> Void in
+    convenience init(_ setup: @escaping (_ complete: @escaping CompletionCallback) throws -> Void) {
+        let fullSetup = { (_ complete: @escaping CompletionCallback, _ promise: Promise) throws -> Void in
             try setup(complete)
         }
 
         self.init(fullSetup)
     }
 
-    init(_ setup: (_ complete: @escaping CompletionCall, _ promise: Promise) throws -> Void) {
+    init(_ setup: (_ complete: @escaping CompletionCallback, _ promise: Promise) throws -> Void) {
         do {
             try setup({ (result) in
                 self.result = result
@@ -85,7 +84,13 @@ class Promise<T> : UntypedPromise {
 
         handleFails()
     }
-
+    
+    func fulfill(_ result: T) {
+        assert(!self.fulfilled, "promise already fulfilled")
+        self.result = result
+        self.handleThens()
+    }
+    
     @discardableResult func then(_ completion: @escaping ThenCall) -> Self {
         thenCalls.append(completion)
 
