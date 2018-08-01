@@ -19,8 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let client = GiphyClient(client: networkingClient)
         
         let splitViewController = window!.rootViewController as! UISplitViewController
-        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        let masterViewController = (splitViewController.viewControllers.first as! UINavigationController).topViewController as! MasterViewController
+        masterViewController.client = client
+        
+        let detailNavigationController = splitViewController.viewControllers.last as! UINavigationController
+        detailNavigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
         return true
     }
