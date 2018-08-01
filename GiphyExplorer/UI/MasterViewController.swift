@@ -11,7 +11,7 @@ class ImageCell: UICollectionViewCell {
             
             notificationCenter.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
             self.playerLayer?.removeFromSuperlayer()
-
+            
             guard let image = image else {
                 return
             }
@@ -30,6 +30,11 @@ class ImageCell: UICollectionViewCell {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer?.frame = contentView.bounds
+    }
+    
     override func prepareForReuse() {
         self.image = nil
     }
@@ -40,12 +45,16 @@ class MasterViewController: UICollectionViewController {
     var client: GiphyClient!
     var images: [Image] = [] {
         didSet {
-            self.collectionView?.reloadData()
-            refreshControl.endRefreshing()
+            DispatchQueue.main.async {
+                self.layout.images = self.images.map { $0.images[MediaRepresentation.mp4previewKey]! }
+                self.refreshControl.endRefreshing()
+                self.collectionView?.reloadData()
+            }
         }
     }
     
     var refreshControl: UIRefreshControl!
+    weak var layout: ImageCollectionViewLayout!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +63,10 @@ class MasterViewController: UICollectionViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        let layout = ImageCollectionViewLayout(columnCount: 2)
+        collectionView.collectionViewLayout = layout
+        self.layout = layout
         
         refreshControl = UIRefreshControl(frame: collectionView.bounds)
         refreshControl.addTarget(self, action: #selector(reload), for: .valueChanged)
@@ -80,6 +93,13 @@ class MasterViewController: UICollectionViewController {
         client.trending(offset: offset).then { [weak self] (response) in
             guard let self = self else {
                 return
+            }
+            
+            let images = response.payload.filter { image in
+                guard let preview = image.mp4s[MediaRepresentation.mp4previewKey] else {
+                    return false
+                }
+                return preview.dimensions != nil
             }
             
             if response.page.offset < self.images.count {

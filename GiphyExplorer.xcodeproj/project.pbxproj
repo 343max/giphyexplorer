@@ -29,6 +29,7 @@
 		BBFB8A39211108A0006BB803 /* trendingResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A38211108A0006BB803 /* trendingResponse.json */; };
 		BBFB8A3B2111144D006BB803 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A3A2111144D006BB803 /* APIKey.plist */; };
 		BBFB8A3F21113E83006BB803 /* giantResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A3E21113E83006BB803 /* giantResponse.json */; };
+		BBFB8A4221115BDD006BB803 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		BBFB8A38211108A0006BB803 /* trendingResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = trendingResponse.json; sourceTree = "<group>"; };
 		BBFB8A3A2111144D006BB803 /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		BBFB8A3E21113E83006BB803 /* giantResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = giantResponse.json; sourceTree = "<group>"; };
+		BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 				BB9070702110E02100E0AA08 /* DetailViewController.swift */,
 				BB9070722110E02100E0AA08 /* Main.storyboard */,
 				BB9070752110E02400E0AA08 /* Assets.xcassets */,
+				BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				BB32DCEA2110F2AE00328A0B /* MediaRepresentation.swift in Sources */,
 				BB96F4DB2111029800ECD809 /* Promise.swift in Sources */,
 				BB9070982110F21100E0AA08 /* Image.swift in Sources */,
+				BBFB8A4221115BDD006BB803 /* ImageCollectionViewLayout.swift in Sources */,
 				BBFB8A3521110784006BB803 /* Response.swift in Sources */,
 				BBFB8A3221110372006BB803 /* GiphyClient.swift in Sources */,
 				BB32DCEC2110FCFD00328A0B /* Pagination.swift in Sources */,
