@@ -59,10 +59,7 @@ class MasterViewController: UICollectionViewController {
     }
     var images: [Image] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.layout.images = self.images.map { $0.images[MediaRepresentation.mp4previewKey]! }
-                self.collectionView?.reloadData()
-            }
+            self.layout.images = self.images.map { $0.images[MediaRepresentation.mp4previewKey]! }
         }
     }
     
@@ -116,13 +113,18 @@ class MasterViewController: UICollectionViewController {
                 return preview.dimensions != nil
             }
             
-            if response.page.offset < self.images.count {
-                self.images = images
-            } else {
-                self.images += images
+            DispatchQueue.main.async {
+                if response.page.offset < self.images.count {
+                    self.images = images
+                    self.collectionView.reloadData()
+                } else {
+                    let indexes = (self.images.count ..< self.images.count + images.count).map { return IndexPath(item: $0, section: 0) }
+                    self.images += images
+                    self.collectionView.insertItems(at: indexes)
+                }
+                
+                self.loading = false
             }
-            
-            self.loading = false
         }
     }
 
