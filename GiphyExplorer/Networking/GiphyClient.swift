@@ -11,11 +11,15 @@ class GiphyNetworkingClient: NetworkingClient {
     init(apiKey: String) {
         self.apiKey = apiKey
         self.session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: nil)
-
     }
     
-    func sendRequest(_ method: HTTPMethod, _ path: String, callback: @escaping (Data?, HTTPURLResponse?, Error?) -> Void ) {
-        var request = URLRequest(url: GiphyNetworkingClient.endpoint.appendingPathComponent(path))
+    func sendRequest(_ method: HTTPMethod, _ path: String, _ parameter: ParameterDict, callback: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
+        var components = URLComponents(url: GiphyNetworkingClient.endpoint, resolvingAgainstBaseURL: false)!
+        components.path += path
+        var parameter = parameter
+        parameter["api_key"] = apiKey
+        components.queryItems = parameter.map { URLQueryItem(name: $0, value: $1) }
+        var request = URLRequest(url: components.url!)
         request.httpMethod = method.rawValue
         
         let task = session.dataTask(with: request) { (data, response, error) in
@@ -35,6 +39,6 @@ class GiphyClient {
     }
     
     func trending(offset: Int, limit: Int = 25, rating: String = "g") -> Promise<Response<[Image]>> {
-        return client.GET("gifs/trending?offset=\(offset)&limit=\(limit)&rating=\(rating)", type: Response<[Image]>.self)
+        return client.GET("gifs/trending", ["offset": String(offset), "limit": String(limit), "rating": rating], type: Response<[Image]>.self)
     }
 }

@@ -8,24 +8,29 @@ enum HTTPMethod : String {
 }
 
 protocol NetworkingClient {
-    func sendRequest(_ method: HTTPMethod, _ path: String, callback: @escaping (Data?, HTTPURLResponse?, Error?) -> Void)
+    typealias ParameterDict = [String: String]
+    func sendRequest(_ method: HTTPMethod, _ path: String, _ parameter: ParameterDict, callback: @escaping (Data?, HTTPURLResponse?, Error?) -> Void)
 }
 
 extension NetworkingClient {
-    func GET(_ path: String, callback: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
-        self.sendRequest(.GET, path, callback: callback)
+    func GET(_ path: String, _ parameter: ParameterDict, callback: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
+        self.sendRequest(.GET, path, parameter, callback: callback)
     }
     
-    func GET<T>(_ path: String, type: T.Type) -> Promise<T> where T : Decodable {
+    func GET<T>(_ path: String, _ parameter: ParameterDict, type: T.Type) -> Promise<T> where T : Decodable {
         return Promise<T>({ (completion, promise) in
-            self.GET(path) { (data, _, error) in
+            self.GET(path, parameter) { (data, _, error) in
                 guard let data = data else {
                     promise.throw(error: error!)
                     return
                 }
                 
-                let result = try! JSONDecoder().decode(type, from: data)
-                completion(result)
+                do {
+                    let result = try JSONDecoder().decode(type, from: data)
+                    completion(result)
+                } catch {
+                    print(error)
+                }
             }
         })
     }
