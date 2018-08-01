@@ -109,14 +109,10 @@
 		BB90706B2110E02100E0AA08 /* GiphyExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				BBFB8A4021115BA8006BB803 /* UI */,
 				BB96F4DA2111029800ECD809 /* Promise.swift */,
 				BBFB8A2E21110312006BB803 /* Networking */,
 				BB90708E2110E0A900E0AA08 /* Model */,
-				BB90706C2110E02100E0AA08 /* AppDelegate.swift */,
-				BB90706E2110E02100E0AA08 /* MasterViewController.swift */,
-				BB9070702110E02100E0AA08 /* DetailViewController.swift */,
-				BB9070722110E02100E0AA08 /* Main.storyboard */,
-				BB9070752110E02400E0AA08 /* Assets.xcassets */,
 				BB9070772110E02400E0AA08 /* LaunchScreen.storyboard */,
 				BB90707A2110E02400E0AA08 /* Info.plist */,
 				BBFB8A3A2111144D006BB803 /* APIKey.plist */,
@@ -182,6 +178,18 @@
 			children = (
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		BBFB8A4021115BA8006BB803 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				BB90706C2110E02100E0AA08 /* AppDelegate.swift */,
+				BB90706E2110E02100E0AA08 /* MasterViewController.swift */,
+				BB9070702110E02100E0AA08 /* DetailViewController.swift */,
+				BB9070722110E02100E0AA08 /* Main.storyboard */,
+				BB9070752110E02400E0AA08 /* Assets.xcassets */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
