@@ -32,7 +32,8 @@ class ImageCell: UICollectionViewCell {
                     self.startPlaying()
                 }
             } else {
-                self.cleanUpPlayer()
+                self.player.pause()
+                self.playerLayer.isHidden = true
             }
         }
     }
@@ -42,13 +43,28 @@ class ImageCell: UICollectionViewCell {
             if isBeingDisplayed {
                 self.startPlaying()
             } else {
-                player?.pause()
+                player.pause()
             }
         }
     }
     
-    weak var player: AVPlayer?
-    weak var playerLayer: AVPlayerLayer?
+    var player: AVPlayer
+    var playerLayer: AVPlayerLayer
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        player = AVPlayer()
+        playerLayer = AVPlayerLayer(player: player)
+        super.init(coder: aDecoder)
+        contentView.layer.addSublayer(playerLayer)
+        playerLayer.frame = contentView.bounds
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: OperationQueue.main) { _ in
+            if (self.isBeingDisplayed) {
+                self.player.seek(to: CMTime.zero)
+                self.player.play()
+            }
+        }
+    }
     
     func startPlaying() {
         guard let localURL = promise?.result?.localURL else {
@@ -59,30 +75,14 @@ class ImageCell: UICollectionViewCell {
             return
         }
         
-        cleanUpPlayer()
-        
-        let player = AVPlayer(url: localURL)
-        player.automaticallyWaitsToMinimizeStalling = true
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = contentView.bounds
-        contentView.layer.addSublayer(playerLayer)
-        self.playerLayer = playerLayer
-        self.player = player
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: OperationQueue.main) { _ in
-            player.seek(to: CMTime.zero)
-            player.play()
-        }
-
-    }
-    
-    func cleanUpPlayer() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-        self.playerLayer?.removeFromSuperlayer()
+        self.playerLayer.isHidden = false
+        self.player.replaceCurrentItem(with: AVPlayerItem(url: localURL))
+        self.player.play()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        playerLayer?.frame = contentView.bounds
+        playerLayer.frame = contentView.bounds
     }
     
     override func prepareForReuse() {
