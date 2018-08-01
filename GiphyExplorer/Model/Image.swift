@@ -18,9 +18,9 @@ struct Image : Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        self.id = try! container.decode(String.self, forKey: CodingKeys.id)
-        self.slug = try! container.decode(String.self, forKey: CodingKeys.slug)
-        self.images = try! container.decode(ImageDict.self, forKey: CodingKeys.mediaRepresentations)
+        self.id = try container.decode(String.self, forKey: CodingKeys.id)
+        self.slug = try container.decode(String.self, forKey: CodingKeys.slug)
+        self.images = try container.decode(ImageDict.self, forKey: CodingKeys.mediaRepresentations)
         self.mp4s = self.images.filter { $0.value.mp4 != nil }
     }
 }

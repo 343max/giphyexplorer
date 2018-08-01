@@ -13,7 +13,7 @@ struct Response<T: Decodable>: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        self.payload = try! container.decode(T.self, forKey: CodingKeys.payload)
-        self.page = try! container.decode(Pagination.self, forKey: CodingKeys.page)
+        self.payload = try container.decode(T.self, forKey: CodingKeys.payload)
+        self.page = try container.decode(Pagination.self, forKey: CodingKeys.page)
     }
 }

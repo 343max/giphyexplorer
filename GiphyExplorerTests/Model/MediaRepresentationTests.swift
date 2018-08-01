@@ -19,8 +19,8 @@ class MediaRepresentationTests: XCTestCase {
 }
 """.data(using: .utf8)!
         let mediaRepresentation = try! JSONDecoder().decode(MediaRepresentation.self, from: data)
-        XCTAssertEqual(mediaRepresentation.dimensions.width, 100)
-        XCTAssertEqual(mediaRepresentation.dimensions.height, 57)
+        XCTAssertEqual(mediaRepresentation.dimensions?.width, 100)
+        XCTAssertEqual(mediaRepresentation.dimensions?.height, 57)
         XCTAssertEqual(mediaRepresentation.mp4!.url, URL(string: "https://media0.giphy.com/media/jxcilyPDPuublRty5I/100w.mp4"))
         XCTAssertEqual(mediaRepresentation.mp4!.size, 17429)
     }
@@ -36,5 +36,18 @@ class MediaRepresentationTests: XCTestCase {
 """.data(using: .utf8)!
         let mediaRepresentation = try! JSONDecoder().decode(MediaRepresentation.self, from: data)
         XCTAssertNil(mediaRepresentation.mp4)
+    }
+    
+    func testNoDimensions() {
+        // some versions are missing dimensions. We are going to ignore these
+        let data = """
+{
+    "mp4": "https://media3.giphy.com/media/3ohc1d8d9tCaBQdUe4/giphy-loop.mp4",
+    "mp4_size": "2520899"
+}
+""".data(using: .utf8)!
+        let mediaRepresentation = try? JSONDecoder().decode(MediaRepresentation.self, from: data)
+        XCTAssertNotNil(mediaRepresentation)
+        XCTAssertNil(mediaRepresentation?.dimensions)
     }
 }

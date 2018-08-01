@@ -24,7 +24,7 @@ struct MediaRepresentation : Decodable {
         }
     }
 
-    let dimensions: Size
+    let dimensions: Size?
     let mp4: Format?
     
     enum CodingKeys: String, CodingKey {
@@ -36,14 +36,19 @@ struct MediaRepresentation : Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        self.dimensions = Size(width: Int(try! container.decode(String.self, forKey: .width))!,
-                               height: Int(try! container.decode(String.self, forKey: .height))!)
+        
+        if let width = Int((try? container.decode(String.self, forKey: .width)) ?? ""),
+            let height = Int((try? container.decode(String.self, forKey: .height)) ?? "") {
+            self.dimensions = Size(width: width, height: height)
+        } else {
+            self.dimensions = nil
+        }
         
         do {
             let url = try? container.decode(URL.self, forKey: .mp4url)
             let size = Int(try container.decode(String.self, forKey: .mp4size))
             self.mp4 = Format(url: url, size: size)
-        } catch _ {
+        } catch {
             self.mp4 = nil
         }
     }

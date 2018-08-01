@@ -28,6 +28,7 @@
 		BBFB8A37211107FD006BB803 /* ResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A36211107FD006BB803 /* ResponseTests.swift */; };
 		BBFB8A39211108A0006BB803 /* trendingResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A38211108A0006BB803 /* trendingResponse.json */; };
 		BBFB8A3B2111144D006BB803 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A3A2111144D006BB803 /* APIKey.plist */; };
+		BBFB8A3F21113E83006BB803 /* giantResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = BBFB8A3E21113E83006BB803 /* giantResponse.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		BBFB8A36211107FD006BB803 /* ResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseTests.swift; sourceTree = "<group>"; };
 		BBFB8A38211108A0006BB803 /* trendingResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = trendingResponse.json; sourceTree = "<group>"; };
 		BBFB8A3A2111144D006BB803 /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
+		BBFB8A3E21113E83006BB803 /* giantResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = giantResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				BBFB8A38211108A0006BB803 /* trendingResponse.json */,
+				BBFB8A3E21113E83006BB803 /* giantResponse.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBFB8A3F21113E83006BB803 /* giantResponse.json in Resources */,
 				BBFB8A39211108A0006BB803 /* trendingResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

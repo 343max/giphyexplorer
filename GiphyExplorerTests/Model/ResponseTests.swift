@@ -15,4 +15,13 @@ class ResponseTests: XCTestCase {
         let response = try? JSONDecoder().decode(Response<[Image]>.self, from: data(fileName: "trendingResponse"))
         XCTAssertNotNil(response)
     }
+
+    func testGiantResponse() {
+        do {
+            let response = try JSONDecoder().decode(Response<[Image]>.self, from: data(fileName: "giantResponse"))
+            XCTAssertNotNil(response)
+        } catch {
+            XCTFail("error: \(error)")
+        }
+    }
 }
