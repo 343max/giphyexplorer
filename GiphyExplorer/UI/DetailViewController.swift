@@ -29,7 +29,9 @@ extension CGRect {
 class DetailViewController: UIViewController {
     var image: Image? {
         didSet {
-            updateLayout()
+            DispatchQueue.main.async {
+                self.updateLayout()
+            }
             if let url = image?.fullSizeURL {
                 self.promise = downloadController.download(url: url)
             }
@@ -39,18 +41,19 @@ class DetailViewController: UIViewController {
         didSet {
             if let promise = promise {
                 promise.then { (asset) in
-                    let playerItem = AVPlayerItem(url: asset.localURL)
-                    self.playerLooper = AVPlayerLooper(player: self.player, templateItem: playerItem)
-                    self.updateLayout()
-                    self.player.play()
+                    DispatchQueue.main.async {
+                        let playerItem = AVPlayerItem(url: asset.localURL)
+                        self.player.replaceCurrentItem(with: playerItem)
+                        self.updateLayout()
+                        self.player.play()
+                    }
                 }
             }
         }
     }
     private var downloadController = DownloadController.shared
-    private var player: AVQueuePlayer!
+    private var player: AVPlayer!
     private var playerLayer: AVPlayerLayer!
-    private var playerLooper: AVPlayerLooper?
 
     func updateLayout() {
         guard let videoSize = image?.fullSize?.dimensions?.size(width: view.bounds.width)  else {
@@ -66,7 +69,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        player = AVQueuePlayer()
+        player = LoopingPlayer()
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.isHidden = true
         self.view.layer.addSublayer(playerLayer)

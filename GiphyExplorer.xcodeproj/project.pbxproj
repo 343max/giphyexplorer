@@ -22,6 +22,7 @@
 		BB90709C2110F23200E0AA08 /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB90709B2110F23200E0AA08 /* ImageTests.swift */; };
 		BB96F4DB2111029800ECD809 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96F4DA2111029800ECD809 /* Promise.swift */; };
 		BB96F4DD211102A000ECD809 /* PromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96F4DC211102A000ECD809 /* PromiseTests.swift */; };
+		BBF2328F21136896002B19F4 /* LoopingPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF2328E21136896002B19F4 /* LoopingPlayer.swift */; };
 		BBFB8A3021110332006BB803 /* NetworkingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A2F21110332006BB803 /* NetworkingClient.swift */; };
 		BBFB8A3221110372006BB803 /* GiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A3121110372006BB803 /* GiphyClient.swift */; };
 		BBFB8A3521110784006BB803 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A3421110784006BB803 /* Response.swift */; };
@@ -65,6 +66,7 @@
 		BB90709B2110F23200E0AA08 /* ImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
 		BB96F4DA2111029800ECD809 /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		BB96F4DC211102A000ECD809 /* PromiseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTests.swift; sourceTree = "<group>"; };
+		BBF2328E21136896002B19F4 /* LoopingPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingPlayer.swift; sourceTree = "<group>"; };
 		BBFB8A2F21110332006BB803 /* NetworkingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingClient.swift; sourceTree = "<group>"; };
 		BBFB8A3121110372006BB803 /* GiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyClient.swift; sourceTree = "<group>"; };
 		BBFB8A3421110784006BB803 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				BB9070722110E02100E0AA08 /* Main.storyboard */,
 				BB9070752110E02400E0AA08 /* Assets.xcassets */,
 				BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */,
+				BBF2328E21136896002B19F4 /* LoopingPlayer.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				BBFB8A4E2112AD30006BB803 /* MediaRepresentation+Size.swift in Sources */,
 				BB90706D2110E02100E0AA08 /* AppDelegate.swift in Sources */,
 				BBFB8A3021110332006BB803 /* NetworkingClient.swift in Sources */,
+				BBF2328F21136896002B19F4 /* LoopingPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

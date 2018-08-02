@@ -40,12 +40,11 @@ class ImageCell: UICollectionViewCell {
         }
     }
     
-    var player: AVQueuePlayer
+    var player: AVPlayer
     var playerLayer: AVPlayerLayer
-    var playerLooper: AVPlayerLooper?
     
     required init?(coder aDecoder: NSCoder) {
-        player = AVQueuePlayer()
+        player = LoopingPlayer()
         playerLayer = AVPlayerLayer(player: player)
         super.init(coder: aDecoder)
         contentView.layer.addSublayer(playerLayer)
@@ -65,7 +64,7 @@ class ImageCell: UICollectionViewCell {
             self.contentView.backgroundColor = [UIColor.gray, UIColor.red, UIColor.green, UIColor.blue, UIColor.cyan, UIColor.yellow, UIColor.magenta, UIColor.orange, UIColor.purple, UIColor.brown].randomElement()
             
             let playerItem = AVPlayerItem(url: localURL)
-            self.playerLooper = AVPlayerLooper(player: self.player, templateItem: playerItem)
+            self.player.replaceCurrentItem(with: playerItem)
             self.playerLayer.isHidden = false
             self.player.play()
         }
