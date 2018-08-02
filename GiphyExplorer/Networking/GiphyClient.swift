@@ -38,7 +38,7 @@ class GiphyClient {
         self.client = client
     }
     
-    func trending(offset: Int, limit: Int = 25, rating: String = "g") -> Promise<Response<[Image]>> {
+    func trending(offset: Int, limit: Int = 50, rating: String = "g") -> Promise<Response<[Image]>> {
         return client.GET("gifs/trending", ["offset": String(offset), "limit": String(limit), "rating": rating], type: Response<[Image]>.self)
     }
 }
