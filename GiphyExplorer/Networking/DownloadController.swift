@@ -13,6 +13,8 @@ class DownloadController: NSObject {
         case unknownDownloadError
     }
     
+    static let shared = DownloadController()
+    
     private var downloads: [URL:AssetPromise] = [:]
     private var cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     private var urlSession: URLSession!

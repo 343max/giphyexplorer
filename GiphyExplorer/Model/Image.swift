@@ -24,3 +24,17 @@ struct Image : Decodable {
         self.mp4s = self.images.filter { $0.value.mp4 != nil }
     }
 }
+
+extension Image {
+    func mp4mediaRepresentation(label: String) -> MediaRepresentation? {
+        guard let representation = self.mp4s[label] else {
+            return nil
+        }
+        
+        if representation.mp4 == nil {
+            return nil
+        }
+        
+        return representation
+    }
+}

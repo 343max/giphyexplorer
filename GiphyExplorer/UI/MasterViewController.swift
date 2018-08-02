@@ -6,15 +6,7 @@ import AVKit
 extension Image {
     var thumbnail: MediaRepresentation? {
         get {
-            guard let thumbnail = self.mp4s["preview"] else {
-                return nil
-            }
-            
-            if thumbnail.mp4 == nil {
-                return nil
-            }
-            
-            return thumbnail
+            return mp4mediaRepresentation(label: "preview")
         }
     }
     var thumbnailURL: URL? {
@@ -86,7 +78,7 @@ class ImageCell: UICollectionViewCell {
 }
 
 class MasterViewController: UICollectionViewController {
-    let downloadController = DownloadController()
+    let downloadController = DownloadController.shared
     var detailViewController: DetailViewController? = nil
     var client: GiphyClient!
     var loading = false {
@@ -121,7 +113,7 @@ class MasterViewController: UICollectionViewController {
         
         collectionView.prefetchDataSource = self
         
-        let layout = ImageCollectionViewLayout(columnCount: 2)
+        let layout = ImageCollectionViewLayout()
         collectionView.collectionViewLayout = layout
         self.layout = layout
         
@@ -180,11 +172,8 @@ class MasterViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = collectionView.indexPathsForSelectedItems?.first {
-//                let object = objects[indexPath.row] as! NSDate
-//                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-//                controller.detailItem = object
-//                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
+                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                controller.image = images[indexPath.item]
             }
         }
     }

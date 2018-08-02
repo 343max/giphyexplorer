@@ -2,15 +2,15 @@
 
 import UIKit
 
-extension MediaRepresentation.Size {
-    func size(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: floor(width / CGFloat(self.width) * CGFloat(self.height)))
-    }
-}
-
 class ImageCollectionViewLayout: UICollectionViewLayout {
-    let columnCount: Int
     var cellFrames: [CGRect] = []
+    var contentWidth = CGFloat(0) {
+        didSet {
+            if (oldValue != contentWidth) {
+                cellFrames = []
+            }
+        }
+    }
     var contentHeight = CGFloat(0)
     var images: [MediaRepresentation] = [] {
         didSet {
@@ -18,22 +18,15 @@ class ImageCollectionViewLayout: UICollectionViewLayout {
         }
     }
     
-    init(columnCount: Int) {
-        self.columnCount = columnCount
-        super.init()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func invalidateLayout() {
-        super.invalidateLayout()
+    func calculateFramesIfNeeded() {
+        contentWidth = collectionView!.frame.width
+        if cellFrames.count < images.count {
+            calculateFrames()
+        }
     }
     
     func calculateFrames() {
-        assert(columnCount > 0)
-        
+        let columnCount = Int(ceil(contentWidth / 320))
         let columnWidth = ceil(collectionView!.frame.width / CGFloat(columnCount))
         var cellFrames: [CGRect] = []
         var contentHeight = CGFloat(0)
@@ -51,7 +44,8 @@ class ImageCollectionViewLayout: UICollectionViewLayout {
     }
     
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: collectionView!.bounds.width, height: contentHeight)
+        calculateFramesIfNeeded()
+        return CGSize(width: contentWidth, height: contentHeight)
     }
     
     func layoutAttributes(item: Int) -> UICollectionViewLayoutAttributes {
@@ -61,10 +55,12 @@ class ImageCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        calculateFramesIfNeeded()
         return layoutAttributes(item: indexPath.item)
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        calculateFramesIfNeeded()
         return cellFrames.enumerated().compactMap { (offset, frame) in
             if frame.intersects(rect) {
                 return self.layoutAttributes(item: offset)

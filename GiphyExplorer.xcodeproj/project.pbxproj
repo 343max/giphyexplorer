@@ -32,6 +32,7 @@
 		BBFB8A4221115BDD006BB803 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */; };
 		BBFB8A44211232E1006BB803 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A43211232E0006BB803 /* DownloadController.swift */; };
 		BBFB8A4621123EE2006BB803 /* DownloadControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A4521123EE1006BB803 /* DownloadControllerTests.swift */; };
+		BBFB8A4E2112AD30006BB803 /* MediaRepresentation+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFB8A4D2112AD30006BB803 /* MediaRepresentation+Size.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		BBFB8A4121115BDD006BB803 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
 		BBFB8A43211232E0006BB803 /* DownloadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		BBFB8A4521123EE1006BB803 /* DownloadControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadControllerTests.swift; sourceTree = "<group>"; };
+		BBFB8A4D2112AD30006BB803 /* MediaRepresentation+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaRepresentation+Size.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				BB9070972110F21100E0AA08 /* Image.swift */,
 				BB32DCEB2110FCFD00328A0B /* Pagination.swift */,
 				BBFB8A3421110784006BB803 /* Response.swift */,
+				BBFB8A4D2112AD30006BB803 /* MediaRepresentation+Size.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				BBFB8A3221110372006BB803 /* GiphyClient.swift in Sources */,
 				BB32DCEC2110FCFD00328A0B /* Pagination.swift in Sources */,
 				BB90706F2110E02100E0AA08 /* MasterViewController.swift in Sources */,
+				BBFB8A4E2112AD30006BB803 /* MediaRepresentation+Size.swift in Sources */,
 				BB90706D2110E02100E0AA08 /* AppDelegate.swift in Sources */,
 				BBFB8A3021110332006BB803 /* NetworkingClient.swift in Sources */,
 			);
