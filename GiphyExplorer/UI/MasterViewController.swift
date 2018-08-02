@@ -61,10 +61,14 @@ class ImageCell: UICollectionViewCell {
             return
         }
         
-        let playerItem = AVPlayerItem(url: localURL)
-        self.playerLooper = AVPlayerLooper(player: self.player, templateItem: playerItem)
-        self.playerLayer.isHidden = false
-        self.player.play()
+        DispatchQueue.main.async {
+            self.contentView.backgroundColor = [UIColor.gray, UIColor.red, UIColor.green, UIColor.blue, UIColor.cyan, UIColor.yellow, UIColor.magenta, UIColor.orange, UIColor.purple, UIColor.brown].randomElement()
+            
+            let playerItem = AVPlayerItem(url: localURL)
+            self.playerLooper = AVPlayerLooper(player: self.player, templateItem: playerItem)
+            self.playerLayer.isHidden = false
+            self.player.play()
+        }
     }
     
     override func layoutSubviews() {
