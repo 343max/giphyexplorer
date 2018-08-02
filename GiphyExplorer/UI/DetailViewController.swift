@@ -27,6 +27,8 @@ extension CGRect {
 }
 
 class DetailViewController: UIViewController {
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var image: Image? {
         didSet {
             DispatchQueue.main.async {
@@ -46,6 +48,7 @@ class DetailViewController: UIViewController {
                         self.player.replaceCurrentItem(with: playerItem)
                         self.updateLayout()
                         self.player.play()
+                        self.activityIndicator.stopAnimating()
                     }
                 }
             }
