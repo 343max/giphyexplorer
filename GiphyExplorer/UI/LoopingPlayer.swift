@@ -3,16 +3,22 @@
 import AVKit
 
 class LoopingPlayer: AVPlayer {
+    weak var observer: NSObjectProtocol?
+    
     override func replaceCurrentItem(with item: AVPlayerItem?) {
-        if let currentItem = currentItem {
-            NotificationCenter.default.removeObserver(currentItem)
-        }
+        NotificationCenter.default.removeObserver(self)
         super.replaceCurrentItem(with: item)
         if let item = item {
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: OperationQueue.main) { _ in
-                self.seek(to: CMTime.zero)
-                self.play()
-            }
+            NotificationCenter.default.addObserver(self, selector: #selector(rewind), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         }
+    }
+    
+    @objc func rewind() {
+        seek(to: CMTime.zero)
+        play()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
