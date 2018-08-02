@@ -24,18 +24,23 @@ class ImageCell: UICollectionViewCell {
                     self.startPlaying()
                 }
             } else {
-                self.player.pause()
-                self.playerLayer.isHidden = true
+                DispatchQueue.main.async {
+                    self.player.pause()
+                    self.playerLayer.isHidden = true
+                }
             }
         }
     }
     
     var isBeingDisplayed = false {
         didSet {
-            if isBeingDisplayed {
-                self.startPlaying()
-            } else {
-                player.pause()
+            DispatchQueue.main.async {
+                if self.isBeingDisplayed {
+                    self.startPlaying()
+                } else {
+                    self.player.pause()
+                    self.playerLayer.isHidden = true
+                }
             }
         }
     }
@@ -49,6 +54,8 @@ class ImageCell: UICollectionViewCell {
         super.init(coder: aDecoder)
         contentView.layer.addSublayer(playerLayer)
         playerLayer.frame = contentView.bounds
+
+        self.contentView.backgroundColor = [UIColor.gray, UIColor.red, UIColor.green, UIColor.blue, UIColor.cyan, UIColor.yellow, UIColor.magenta, UIColor.orange, UIColor.purple, UIColor.brown].randomElement()
     }
     
     func startPlaying() {
@@ -61,8 +68,6 @@ class ImageCell: UICollectionViewCell {
         }
         
         DispatchQueue.main.async {
-            self.contentView.backgroundColor = [UIColor.gray, UIColor.red, UIColor.green, UIColor.blue, UIColor.cyan, UIColor.yellow, UIColor.magenta, UIColor.orange, UIColor.purple, UIColor.brown].randomElement()
-            
             let playerItem = AVPlayerItem(url: localURL)
             self.player.replaceCurrentItem(with: playerItem)
             self.playerLayer.isHidden = false
@@ -200,7 +205,7 @@ class MasterViewController: UICollectionViewController {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !loading && scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.height * 1.5 {
+        if !loading && scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.frame.height * 2.5 {
             loadMore(reload: false)
         }
     }
