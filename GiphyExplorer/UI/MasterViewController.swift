@@ -6,7 +6,7 @@ import AVKit
 extension Image {
     var thumbnail: MediaRepresentation? {
         get {
-            guard let thumbnail = self.mp4s[MediaRepresentation.mp4previewKey] else {
+            guard let thumbnail = self.mp4s["preview"] else {
                 return nil
             }
             

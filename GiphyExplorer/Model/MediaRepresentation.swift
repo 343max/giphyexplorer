@@ -3,8 +3,6 @@
 import Foundation
 
 struct MediaRepresentation : Decodable {
-    static let mp4previewKey = "preview"
-    
     struct Size {
         let width: Int
         let height: Int

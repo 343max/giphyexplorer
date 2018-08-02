@@ -2,6 +2,12 @@
 
 import UIKit
 
+class DarkSplitViewController: UISplitViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
@@ -17,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let networkingClient = GiphyNetworkingClient(apiKey: apiKey)
         let client = GiphyClient(client: networkingClient)
+        
+        window?.tintColor = UIColor.orange
         
         let splitViewController = window!.rootViewController as! UISplitViewController
         let masterViewController = (splitViewController.viewControllers.first as! UINavigationController).topViewController as! MasterViewController
