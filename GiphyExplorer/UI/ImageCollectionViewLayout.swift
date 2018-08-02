@@ -26,7 +26,7 @@ class ImageCollectionViewLayout: UICollectionViewLayout {
     }
     
     func calculateFrames() {
-        let columnCount = Int(ceil(contentWidth / 320))
+        let columnCount = min(Int(ceil(contentWidth / 320)), 3)
         let columnWidth = ceil(collectionView!.frame.width / CGFloat(columnCount))
         var cellFrames: [CGRect] = []
         var contentHeight = CGFloat(0)

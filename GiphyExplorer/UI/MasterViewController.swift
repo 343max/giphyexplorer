@@ -106,11 +106,6 @@ class MasterViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
-        
         collectionView.prefetchDataSource = self
         
         let layout = ImageCollectionViewLayout()
@@ -123,7 +118,6 @@ class MasterViewController: UICollectionViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         
         if images.count == 0 {
@@ -172,7 +166,7 @@ class MasterViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = collectionView.indexPathsForSelectedItems?.first {
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                let controller = segue.destination as! DetailViewController
                 controller.image = images[indexPath.item]
             }
         }
