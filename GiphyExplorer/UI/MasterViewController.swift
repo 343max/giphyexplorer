@@ -48,22 +48,16 @@ class ImageCell: UICollectionViewCell {
         }
     }
     
-    var player: AVPlayer
+    var player: AVQueuePlayer
     var playerLayer: AVPlayerLayer
-    
+    var playerLooper: AVPlayerLooper?
     
     required init?(coder aDecoder: NSCoder) {
-        player = AVPlayer()
+        player = AVQueuePlayer()
         playerLayer = AVPlayerLayer(player: player)
         super.init(coder: aDecoder)
         contentView.layer.addSublayer(playerLayer)
         playerLayer.frame = contentView.bounds
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: OperationQueue.main) { _ in
-            if (self.isBeingDisplayed) {
-                self.player.seek(to: CMTime.zero)
-                self.player.play()
-            }
-        }
     }
     
     func startPlaying() {
@@ -75,8 +69,9 @@ class ImageCell: UICollectionViewCell {
             return
         }
         
+        let playerItem = AVPlayerItem(url: localURL)
+        self.playerLooper = AVPlayerLooper(player: self.player, templateItem: playerItem)
         self.playerLayer.isHidden = false
-        self.player.replaceCurrentItem(with: AVPlayerItem(url: localURL))
         self.player.play()
     }
     
